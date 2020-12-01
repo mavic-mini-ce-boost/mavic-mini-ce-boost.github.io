@@ -13,7 +13,8 @@
 
     <h2>Disclaimer</h2>
     <p>This is an experiment solely for educational purpose.</p>
-    <p>Please do not attempt it as this will void your warranty and can possibly violate local regulations on radio usage. Here you will also find instructions on how to roll back applied changes.</p>
+    <p>Please do not attempt it as this will void your warranty and can possibly violate local regulations on radio usage.</p>
+    <p>Below there are instructions on how to undo the changes.</p>
 
     <h2>Overview</h2>
     <!--<p>Mavic Mini comes in several hardware versions for different markets. FCC for USA, CE for Europe and there's a version for Japan. FCC, CE and Japanese version all differ in hardware of the aircraft (AC) and the remote controller (RC).</p>-->
@@ -22,23 +23,40 @@
       <li>Step 2. Prevent the Remote Controller from changing that setting in the drone.</li>
     </ol>
 
-    <h2>Browser support</h2>
-    <ul>
-      <li>Chrome 80+</li>
-      <li>Opera (you need to enable it's flag in opera://flags/#enable-experimental-web-platform-features)</li>
-      <li>Edge (Chromium based)</li>
-    </ul>
-    <p>No FireFox yet.</p>
+    <h2>Step 1</h2>
+    <p>TODO: write in details about Android phone with 
+      <a href="https://play.google.com/store/apps/details?id=com.lexa.fakegps" target="_blank">
+        Fake GPS Location
+      </a>
+      app;
+      old version of 
+      <a href="https://www.apkmirror.com/apk/dji-technology-co-ltd/dji-fly/dji-fly-1-1-2-release/dji-fly-1-1-2-2-android-apk-download/" target="_blank">
+        DJI Fly App 1.1.2
+      </a> 
+      via ApkMirror site.</p>
+      <p>. . .</p>
 
-    <h2>Enable your browser</h2>
-    <p>At this moment you need to enable your browser's Experimental Web Platform Features, just copy and paste the right URL:</p>
+    <h2>Step 2</h2>
+    <p>Patch the Remote Controller to permanently freeze the changes made in step 1.</p>
+    <p>Will need:
+      <ol>
+        <li>Computer with USB port and fresh modern browser: Chrome, Opera or Edge.
+          <br><s>Safari</s>, <s>FireFox</s> not supported.</li>
+        <li>USB cable to connect the Remote to you computer</li>
+      </ol>
+    </p>
+
+    <h3>Enable your browser</h3>
+    <p>At this moment you need to enable Experimental Web Platform Features. Copy the right URL below and paste in new tab's Address bar:</p>
     <pre>
     chrome://flags/#enable-experimental-web-platform-features
+
     opera://flags/#enable-experimental-web-platform-features
+
     edge://flags/#enable-experimental-web-platform-features
     </pre>
 
-    <h2>Boost the Remote Controller</h2>
+    <h3>Boost the Remote Controller</h3>
     <ol>
       <li>Connect your Remote Controller with USB cable to this computer.</li>
       <li>Turn the Remote ON.</li>
@@ -61,7 +79,7 @@
       </button>
     </div>
 
-    <h2>Undo the patch</h2>
+    <h3>Undo the patch</h3>
     <p>Return your Remote Controller to the original "stock" state.</p>
     <ol>
       <li>Connect your Remote Controller with USB cable to this computer.</li>
@@ -91,7 +109,7 @@
     el.classList.remove('d-none');
   }
 
-  // Byte sequences credits: skyhack.ru
+  // Byte sequence credits: skyhack.ru
   const data = {
     boost: new Uint8Array([0x55,0x0e,0x04,0x66,0x2a,0x1b,0x07,0x27,0x40,0x06,0xfb,0x02,0xac,0x35]),
     stock: new Uint8Array([0x55,0x0e,0x04,0x66,0x2a,0x1b,0x25,0xf9,0x40,0x06,0xfb,0x03,0x9c,0x37]),
@@ -101,18 +119,18 @@
     if ('serial' in navigator) {
       try {
         const port = await navigator.serial.requestPort();
-        console.log(port);
-        const info = port.getInfo();
-        if (info.usbProductId && info.usbVendorId) {
-          if (info.usbProductId == 8  &&  info.usbVendorId == 11427) {
-            // Mavic Mini remote, for sure
-          }
-        }
+
+        // const info = port.getInfo();
+        // if (info.usbProductId && info.usbVendorId) {
+        //   if (info.usbProductId == 8  &&  info.usbVendorId == 11427) {
+        //     // Mavic Mini remote, for sure
+        //   }
+        // }
 
         await port.open({ baudRate: 9600, baudrate: 9600 }); // spelling varies
 
-        this.writer = port.writable.getWriter();
-        this.writer.write(arrayBuffer);
+        const writer = port.writable.getWriter();
+        writer.write(arrayBuffer);
 
         document.getElementById('alert-ok').classList.remove('d-none');
 
