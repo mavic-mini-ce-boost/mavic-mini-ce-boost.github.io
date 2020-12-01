@@ -77,7 +77,7 @@
         this.encoder = new TextEncoder();
         this.decoder = new TextDecoder();
       
-        async read() {
+        const read = async () => {
           try {
             const readerData = await this.reader.read();
             return this.decoder.decode(readerData.value);
