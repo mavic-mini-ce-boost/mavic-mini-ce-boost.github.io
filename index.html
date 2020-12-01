@@ -64,14 +64,30 @@
         console.log(port);
         const info = port.getInfo();
         if (info.usbProductId && info.usbVendorId) {
-          if (info.usbProductId == 8  &&  usbVendorId == 11427) {
+          if (info.usbProductId == 8  &&  info.usbVendorId == 11427) {
             // Mavic Mini remote, for sure
           }
         }
 
         await port.open({ baudRate: 9600, baudrate: 9600 }); // spelling varies
+
         this.reader = port.readable.getReader();
         this.writer = port.writable.getWriter();
+
+        this.encoder = new TextEncoder();
+        this.decoder = new TextDecoder();
+      
+        async read() {
+          try {
+            const readerData = await this.reader.read();
+            return this.decoder.decode(readerData.value);
+          }
+          catch (err) {
+            const errorMessage = `error reading data: ${err}`;
+            console.error(errorMessage);
+            return errorMessage;
+          }
+        }
 
         const data = {
           boost: new Uint8Array([0x55,0x0e,0x04,0x66,0x2a,0x1b,0x07,0x27,0x40,0x06,0xfb,0x02,0xac,0x35]),
@@ -79,6 +95,7 @@
         };
 
         this.writer.write(data.boost);
+        read();
 
         console.log("All done");
       }
