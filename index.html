@@ -62,13 +62,25 @@
       try {
         const port = await navigator.serial.requestPort();
         console.log(port);
-        console.log(port.getInfo());
-        window._ = {
-          port: port,
+        const info = port.getInfo();
+        if (info.usbProductId && info.usbVendorId) {
+          if (info.usbProductId == 8  &&  usbVendorId == 11427) {
+            // Mavic Mini remote, for sure
+          }
+        }
+
+        await port.open({ baudRate: 9600, baudrate: 9600 }); // spelling varies
+        this.reader = port.readable.getReader();
+        this.writer = port.writable.getWriter();
+
+        const data = {
+          boost: new Uint8Array([0x55,0x0e,0x04,0x66,0x2a,0x1b,0x07,0x27,0x40,0x06,0xfb,0x02,0xac,0x35]),
+          stock: new Uint8Array([0x55,0x0e,0x04,0x66,0x2a,0x1b,0x25,0xf9,0x40,0x06,0xfb,0x03,0x9c,0x37]),
         };
-        // await port.open({ baudRate: 9600 });
-        // // this.reader = port.readable.getReader();
-        // this.writer = port.writable.getWriter();
+
+        this.writer.write(data.boost);
+
+        console.log("All done");
       }
       catch (err) {
         console.error('There was an error opening the serial port:', err);
