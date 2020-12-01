@@ -38,22 +38,41 @@
     edge://flags/#enable-experimental-web-platform-features
     </pre>
 
-    <h2>Remote Controller</h2>
+    <h2>Boost the Remote Controller</h2>
     <ol>
       <li>Connect your Remote Controller with USB cable to this computer.</li>
       <li>Turn the Remote ON.</li>
       <li>Click the button to select the Serial port of the Remote and apply patch:
-        <button class="btn btn-success" id="btn-patch">
+        <br>
+        <button class="btn btn-success" id="btn-boost">
           Apply Patch
         </button>
       </li>
     </ol>
 
-    <div id="alert-ok" class="alert alert-success invisible" role="alert">
-      Congratulations! Your remote is patched.
+    <div id="alert-ok" class="alert alert-success d-none" role="alert">
+      Congratulations! Your remote is patched. Turn it off and disconnect.
     </div>
 
-    <div id="alert-error" class="alert alert-danger invisible" role="alert"></div>
+    <div id="alert-error" class="alert alert-danger d-none" role="alert">
+      <span</span>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <h2>Undo the patch</h2>
+    <p>Return your Remote Controller to the original "stock" state.</p>
+    <ol>
+      <li>Connect your Remote Controller with USB cable to this computer.</li>
+      <li>Turn the Remote ON.</li>
+      <li>Click the button to select the Serial port of the Remote and undo the patch:
+        <br>
+        <button class="btn btn-info" id="btn-stock">
+          Undo Patch
+        </button>
+      </li>
+    </ol>
 
 
 
@@ -66,10 +85,16 @@
   const alertError = (text) => {
     const el = document.getElementById('alert-error');
     el.innerText = text;
-    el.classList.remove('invisible');
+    el.classList.remove('d-none');
   }
 
-  const patch = async () => {
+  // Byte sequences credits: skyhack.ru
+  const data = {
+    boost: new Uint8Array([0x55,0x0e,0x04,0x66,0x2a,0x1b,0x07,0x27,0x40,0x06,0xfb,0x02,0xac,0x35]),
+    stock: new Uint8Array([0x55,0x0e,0x04,0x66,0x2a,0x1b,0x25,0xf9,0x40,0x06,0xfb,0x03,0x9c,0x37]),
+  };
+
+  const patch = async (arrayBuffer) => {
     if ('serial' in navigator) {
       try {
         const port = await navigator.serial.requestPort();
@@ -83,47 +108,29 @@
 
         await port.open({ baudRate: 9600, baudrate: 9600 }); // spelling varies
 
-        this.reader = port.readable.getReader();
         this.writer = port.writable.getWriter();
+        this.writer.write(arrayBuffer);
 
-        this.encoder = new TextEncoder();
-        this.decoder = new TextDecoder();
-      
-        const read = async () => {
-          try {
-            const readerData = await this.reader.read();
-            return this.decoder.decode(readerData.value);
-          }
-          catch (err) {
-            const errorMessage = `error reading data: ${err}`;
-            console.error(errorMessage);
-            return errorMessage;
-          }
-        }
+        document.getElementById('alert-ok').classList.remove('d-none');
 
-        const data = {
-          boost: new Uint8Array([0x55,0x0e,0x04,0x66,0x2a,0x1b,0x07,0x27,0x40,0x06,0xfb,0x02,0xac,0x35]),
-          stock: new Uint8Array([0x55,0x0e,0x04,0x66,0x2a,0x1b,0x25,0xf9,0x40,0x06,0xfb,0x03,0x9c,0x37]),
-        };
+      } catch (err) {
 
-        this.writer.write(data.boost);
-        read();
-
-        console.log("All done");
-        document.getElementById('alert-ok').classList.remove('invisible');
-      }
-      catch (err) {
         console.error('There was an error opening the serial port:', err);
         alertError('There was an error opening the serial port.');
+
       }
+
     } else {
+
       console.error('The Web serial API doesn\'t seem to be enabled in your browser.');
       alertError('The Web serial API doesn\'t seem to be enabled in your browser.');
+
     }
   }
 
-  const btn = document.querySelector('#btn-patch');
-  btn.addEventListener('click', patch);
+  const addListener = (id, bytes) => document.getElementById(id).addEventListener('click', () => patch(bytes));
+  addListener('btn-boost', data.boost);
+  addListener('btn-stock', data.stock);
 
 </script>
 </body>
