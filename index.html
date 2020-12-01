@@ -62,6 +62,10 @@
       try {
         const port = await navigator.serial.requestPort();
         console.log(port);
+        console.log(port.getInfo());
+        window._ = {
+          port: port,
+        };
         // await port.open({ baudRate: 9600 });
         // // this.reader = port.readable.getReader();
         // this.writer = port.writable.getWriter();
