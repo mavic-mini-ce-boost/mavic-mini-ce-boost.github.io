@@ -13,31 +13,102 @@
 
     <h2>Disclaimer</h2>
     <p class="lead">This is an experiment solely for educational purpose.</p>
-    <p>Please do not attempt it as this will void your warranty and can possibly violate local regulations on radio usage.
+    <p>Please do not attempt it as this can void your warranty and may possibly violate local regulations on radio usage.
       <a href="https://www.dji.com/flysafe" target="_blank">Fly Safe</a>.</p>
-    <p>Below there are instructions on how to undo the changes.</p>
 
     <h2>Overview</h2>
     <!--<p>Mavic Mini comes in several hardware versions for different markets. FCC for USA, CE for Europe and there's a version for Japan. FCC, CE and Japanese version all differ in hardware of the aircraft (AC) and the remote controller (RC).</p>-->
     <p>
       This hack allows Mavic Mini CE drone and remote controller to bypass local regulation limitations, 
       enabling all WiFi channels and maximum transmission power.
-      After applying this hack use your drone as usual, as out of the box.
+      After applying this hack use your drone as usual.
     </p>
     <ol>
       <li>Step 1. Make the drone "think" it is in USA or Bolivia, where both 2.4 GHz and 5.8 GHz ranges can be used;</li>
       <li>Step 2. Permanently prevent the Remote Controller from resetting the drone back to local limitations.</li>
     </ol>
 
+    <h2>How-to video</h2>
+    <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/MehzCwfdhB0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h2>Required parts</h2>
+    <ul>
+      <li>DJI Mavic Mini aircraft and remote controller</li>
+      <li>Android phone</li>
+      <li>Computer with browser</li>
+      <li>USB cable from remote controller to computer</li>
+    </ul>
+    <p>That's it. No special adapters, cables, programming environments or paid software. Free and simple!</p>
+
     <h2>Step 1</h2>
-    <p>TODO: write in details about Android phone with 
-      <a href="https://play.google.com/store/apps/details?id=com.lexa.fakegps" target="_blank">
+
+    <p>
+      We will install old version DJI Fly App 1.1.2 and an app called "Fake GPS Location" on your Android phone.
+    </p>
+
+
+    <h4>Fake GPS Location</h4>
+    <p>
+      Fake GPS Location app helps simulate our locaion in USA or Bolivia.
+      Do this at home, under a roof, so that drone does not receive GPS signal from satellites.
+    </p>
+    
+    <p>
+      Install Android app <a href="https://play.google.com/store/apps/details?id=com.lexa.fakegps" target="_blank">
         Fake GPS Location
-      </a> app setting phone location to the USA; old version of 
-      <a href="https://www.apkmirror.com/apk/dji-technology-co-ltd/dji-fly/dji-fly-1-1-2-release/dji-fly-1-1-2-2-android-apk-download/" target="_blank">
-        DJI Fly App (1.1.2)
-      </a> from ApkMirror.</p>
-      <p>. . .</p>
+      </a> from Google Play.
+    </p>
+
+    <p>
+      Enable Developer mode on your Android phone. Go to Settings menu, About phone,    
+      locate the "Build number" or "MIUI version" and tap it 7 times. 
+      An alert will show that "You are now a Developer".
+  </p>
+
+    <p>
+      Now go to Settings again and locate "Developer options" menu at the bottom or under "Advanced settings".
+      In the Developer Options there is an item "Select mock location app" where you can select the Fake GPS Locaion app.
+    </p>
+    
+    <p>
+      Back to the Fake GPS Location, on the map select any point in the USA or Bolivia and click the "Play" triangle button.
+      Now your phone will think that it is in that position. You can check that in your Gogole Maps app or any other location app.
+    </p>
+
+
+    <h4>DJI Fly 1.1.2</h4>
+    <p>Take your phone and remove current DJI Fly App.
+      Download an older <a href="https://www.apkmirror.com/apk/dji-technology-co-ltd/dji-fly/dji-fly-1-1-2-release/dji-fly-1-1-2-2-android-apk-download/" target="_blank">
+        DJI Fly App 1.1.2
+      </a> on your phone. Find downloaded file, open it and install.
+    </p>
+
+    <h4>Turn it on</h4>
+    <p>
+      Connect the Remote Conrtoller to the phone and switch it on. Launch the DJI Fly App 1.1.2
+      <br>Switch on the drone.
+      <br>Wait till it connects to the remote. 
+    </p>
+
+<p>
+  The app should display a message:
+  <pre>
+  Aircraft resetting wireless network settings
+  to match local laws and regulations. Wait
+  and connect again later.</pre>
+</p>
+
+<p>
+  That's our goal!
+  
+  Click the three dots in the upper right corner and select the "Transmission" menu.
+  
+  <br>There you should see that frequency is now <code>5.8</code>
+  and the chart below displays WiFi channels <code>1..13</code> and <code>149..165</code>
+  
+  <br>Switch off the drone, and the remote controller. Disconnect the remote controller.
+</p>
+
 
     <h2>Step 2</h2>
     <p>Patch the Remote Controller to permanently freeze the changes made in step 1.</p>
@@ -49,29 +120,31 @@
         <li>USB cable to connect the remote controller to this computer.</li>
       </ol>
     </p>
-    <h5>Two actions:</h5>
+    <h5>Action plan</h5>
     <ol>
-      <li>Enable Experimental features in your browser and restart the browser;</li>
-      <li>Connect the Remote Controller and click the button below.</li>
+      <li>Enable Experimental features in your browser and relaunch the browser</li>
+      <li>Connect the Remote Controller</li>
+      <li>Click the button below</li>
+      <li>Select the Remote Controller in the list of serial ports.</li>
     </ol>
 
 
-    <h3>Enable your browser</h3>
+    <h4>Enable your browser</h4>
     <p>At this moment you need to enable Experimental Web Platform Features. Copy the right URL below and paste it in new tab Address bar:</p>
     <pre>
-    chrome://flags/#enable-experimental-web-platform-features
+chrome://flags/#enable-experimental-web-platform-features
 
-    opera://flags/#enable-experimental-web-platform-features
+opera://flags/#enable-experimental-web-platform-features
 
-    edge://flags/#enable-experimental-web-platform-features
+edge://flags/#enable-experimental-web-platform-features
     </pre>
-    <p>Enable the Experimental Web Platform Features there. Browser will ask to restart.</p>
+    <p>Enable the Experimental Web Platform Features there. Browser will ask to relaunch.</p>
 
-    <h3>Boost the Remote Controller</h3>
+    <h4>Boost the Remote Controller</h4>
     <ol>
       <li>Connect your Remote Controller with USB cable to this computer.</li>
       <li>Turn the Remote ON.</li>
-      <li>Click the button to select the Serial port of the Remote ("Gadget Serial v2_4") and apply the patch:
+      <li>Click the button below. In the popup window select the Serial port of the Remote ("Gadget Serial v2_4") to apply the patch:
         <br>
         <button class="btn btn-success" id="btn-boost">
           Apply Patch
@@ -81,7 +154,7 @@
 
     <div id="alert-patch" class="alert alert-success d-none" role="alert"></div>
 
-    <h3>Undo the patch</h3>
+    <h4>Undo the patch (just in case)</h4>
     <p>Return your Remote Controller to the original "stock" state.</p>
     <ol>
       <li>Connect your Remote Controller with USB cable to this computer.</li>
@@ -95,16 +168,28 @@
     </ol>
     <div id="alert-undo" class="alert alert-success d-none" role="alert"></div>
 
+    <h2>Cleanup</h2>
+    <ol>
+      <li>Uninstall Fake GPS Location app</li>
+      <li>Uninstall outdated DJI Fly App</li>
+      <li>Install a fresh DJI Fly App from Google Play</li>
+    </ol>
 
     <h2>FAQ – frequently asked questions</h2>
     <dl>
       <dt>Can I update DJI Fly App?</dt>
       <dd>Yes. The old <code>1.1.2</code> version was only required once in Step 1. After applying the hack remove that old version and install a fresh DJI Fly App from Google Play. Update it as usual.</dd>
+      <dt>How does this work?</dt>
+      <dd>Trick with Fake GPS Location makes it all: countries like USA or Bolivia permit the most radio transmission power and more WiFi channels, than most other countries.
+        This hack sends a few bytes to the Remote Controller that patch it so that it does not transmit the country update command further to the drone anymore.
+        It does not affect GPS positioning or anything else.
+      </dd>
+
     </dl>
 
     <h2>Credits</h2>
     <p>Hack idea and magic byte sequences: Andrey (Telegram @skyhackru, site Skyhack.ru) and Telegram chat @mavicminirus (in Russian)</p>
-    <p>In-browser JavaScript version: Sergei Sokolov (Telegram @sergiks)</p>
+    <p>In-browser JavaScript version and explainer video: Sergei Sokolov (Telegram @sergiks)</p>
 
 
   </div>
@@ -117,7 +202,7 @@
     const el = document.getElementById(id);
     el.innerText = text;
     el.classList.remove('d-none');
-    
+
     if (is_error) {
       el.classList.remove('alert-success');
       el.classList.add('alert-danger');
