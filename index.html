@@ -117,9 +117,13 @@
     const el = document.getElementById(id);
     el.innerText = text;
     el.classList.remove('d-none');
+    
     if (is_error) {
       el.classList.remove('alert-success');
       el.classList.add('alert-danger');
+    } else {
+      el.classList.remove('alert-danger');
+      el.classList.add('alert-success');
     }
   }
 
