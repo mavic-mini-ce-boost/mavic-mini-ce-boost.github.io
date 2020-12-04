@@ -19,8 +19,11 @@
 
     <h2>Overview</h2>
     <!--<p>Mavic Mini comes in several hardware versions for different markets. FCC for USA, CE for Europe and there's a version for Japan. FCC, CE and Japanese version all differ in hardware of the aircraft (AC) and the remote controller (RC).</p>-->
-    <p>This hack allows Mavic Mini CE drone and remote controller to bypass local regulation limitations, enabling all WiFi channels and maximum transmission power.</p>
-    <p>After applying this hack use your drone as usual, as out of the box.</p>
+    <p>
+      This hack allows Mavic Mini CE drone and remote controller to bypass local regulation limitations, 
+      enabling all WiFi channels and maximum transmission power.
+      After applying this hack use your drone as usual, as out of the box.
+    </p>
     <ol>
       <li>Step 1. Make the drone "think" it is in USA or Bolivia, where both 2.4 GHz and 5.8 GHz ranges can be used;</li>
       <li>Step 2. Permanently prevent the Remote Controller from resetting the drone back to local limitations.</li>
@@ -76,16 +79,7 @@
       </li>
     </ol>
 
-    <div id="alert-ok" class="alert alert-success d-none" role="alert">
-      Congratulations! Your Remote Conrtoller is patched. Turn it off and disconnect.
-    </div>
-
-    <div id="alert-error" class="alert alert-danger d-none" role="alert">
-      <span</span>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+    <div id="alert-patch" class="alert alert-success d-none" role="alert"></div>
 
     <h3>Undo the patch</h3>
     <p>Return your Remote Controller to the original "stock" state.</p>
@@ -99,9 +93,7 @@
         </button>
       </li>
     </ol>
-    <div id="alert-undo" class="alert alert-success d-none" role="alert">
-      Congratulations! Your Remote Conrtoller is in original stock state. Turn it off and disconnect.
-    </div>
+    <div id="alert-undo" class="alert alert-success d-none" role="alert"></div>
 
 
     <h2>FAQ – frequently asked questions</h2>
@@ -121,11 +113,16 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
 <script>
-  const alertError = (text, alertId) => {
-    const el = document.getElementById('alert-error');
+  const showAlert = (id, text, is_error) => {
+    const el = document.getElementById(id);
     el.innerText = text;
     el.classList.remove('d-none');
+    if (is_error) {
+      el.classList.remove('alert-success');
+      el.classList.add('alert-danger');
+    }
   }
+
 
   // Byte sequence credits: skyhack.ru  t.me/skyhackru
   const data = {
@@ -133,7 +130,7 @@
     stock: new Uint8Array([85, 14, 4, 102, 42, 27, 37, 249, 64, 6, 251, 3, 156, 55]),
   };
 
-  const patch = async (arrayBuffer) => {
+  const patch = async (arrayBuffer, alertId, alertText) => {
     if ('serial' in navigator) {
       try {
         const port = await navigator.serial.requestPort();
@@ -150,26 +147,26 @@
         const writer = port.writable.getWriter();
         writer.write(arrayBuffer);
 
-        document.getElementById(alertId).classList.remove('d-none');
+        showAlert(alertId, alertText);
 
       } catch (err) {
 
         console.error('There was an error opening the serial port:', err);
-        alertError('There was an error opening the serial port.');
-
+        showAlert(alertId, 'There was an error opening the serial port.', true);
+        
       }
-
+      
     } else {
-
+      
       console.error('The Web serial API doesn\'t seem to be enabled in your browser.');
-      alertError('The Web serial API doesn\'t seem to be enabled in your browser.');
+      showAlert(alertId, 'The Web serial API doesn\'t seem to be enabled in your browser.', true);
 
     }
   }
 
-  const addListener = (id, bytes, alertId) => document.getElementById(id).addEventListener('click', () => patch(bytes, alertId));
-  addListener('btn-boost', data.boost, 'alert-ok');
-  addListener('btn-stock', data.stock, 'alert-undo');
+  const addListener = (id, bytes, alertId, alertText) => document.getElementById(id).addEventListener('click', () => patch(bytes, alertId, alertText));
+  addListener('btn-boost', data.boost, 'alert-patch', 'Congratulations! Your Mavic Mini is patched.');
+  addListener('btn-stock', data.stock, 'alert-undo', 'Congratulations! Your Mavic Mini is in original state.');
 
 </script>
 </body>
