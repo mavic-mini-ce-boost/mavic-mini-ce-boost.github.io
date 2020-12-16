@@ -177,12 +177,25 @@ edge://flags/#enable-experimental-web-platform-features
 
     <h2>FAQ – frequently asked questions</h2>
     <dl>
+
+      <dt>Can I use this for DJI Mini 2?</dt>
+      <dd>No. This is only for DJI Mavic Mini.</dd>
+
       <dt>Can I update DJI Fly App?</dt>
       <dd>Yes. The old <code>1.1.2</code> version was only required once in Step 1. After applying the hack remove that old version and install a fresh DJI Fly App from Google Play. Update it as usual.</dd>
+
       <dt>How does this work?</dt>
       <dd>Trick with Fake GPS Location makes it all: countries like USA or Bolivia permit the most radio transmission power and more WiFi channels, than most other countries.
         This hack sends a few bytes to the Remote Controller that patch it so that it does not transmit the country update command further to the drone anymore.
         It does not affect GPS positioning or anything else.
+      </dd>
+
+      <dt>How does this work, technically?</dt>
+      <dd>It modifies a single setting <code>disable_country=0</code> to <code>disable_country=1</code> in a config file <code>wifi.conf</code> in the RC.
+        Special byte sequence sent to a USB serial port of the RC updates the settings. Search "DJI DUML" and "0x55 sequences" for more details.
+        <br>Sequence to lock the setting: <pre>0x55 0x0e 0x04 0x66 0x2a 0x1b 0x07 0x27 0x40 0x06 0xfb 0x02 0xac 0x35</pre>
+        Sequence to unlock to original setting: <pre>0x55 0x0e 0x04 0x66 0x2a 0x1b 0x25 0xf9 0x40 0x06 0xfb 0x03 0x9c 0x37</pre>
+        
       </dd>
 
     </dl>
