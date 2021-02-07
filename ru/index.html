@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DJI Mavic Mini CE FCC хак</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+</head>
+<body>
+  <div class="container">
+  <h1>DJI Mavic Mini CE FCC хак</h1>
+
+    <h2>Предупреждение</h2>
+    <p class="lead">Это эксперимент исключительно в образовательных целях.</p>
+    <p>Пожалуйста, не пытайтесь повторить это дома, т.к. это может обнулить вашу гарантию и нарушить местные правила по использованию радио частот.
+      <a href="https://www.dji.com/flysafe" target="_blank">Летайте безопасно</a> и ответственно.</p>
+
+    <h2>Описание</h2>
+    <!--<p>Mavic Mini comes in several hardware versions for different markets. FCC for USA, CE for Europe and there's a version for Japan. FCC, CE and Japanese version all differ in hardware of the aircraft (AC) and the remote controller (RC).</p>-->
+    <p>
+      DJI ограничивает радио частоты и мощность радио сигнала, чтобы соответствовать местным правилам.
+      Этот хак позволяет снять эти ограничения. Например, для Mavic Mini CE в России появится диапазон 5.8 GHz (WiFi каналы 149 — 165) и мощность передатчика возрастёт.
+      После этого хака можно пользоваться дроном как обычно.
+    </p>
+    <p>План действий:</p>
+    <ol>
+      <li>Шаг 1. С помощью Fake GPS дрон решит, что он находится в США или Боливии и включит оба диапазона и макс. мощность;</li>
+      <li>Шаг 2. Изменим в пульте настройку, чтобы дрон не переключился обратно в ограниченный режим.</li>
+    </ol>
+
+    <h2>Видео</h2>
+    <p>Я записал видео на английском языке, но добавил субтитры на русском.</p>
+    <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/MehzCwfdhB0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h2>Что понадобится для хака</h2>
+    <ul>
+      <li>DJI Mavic Mini дрон и пульт</li>
+      <li>мобильник с Android</li>
+      <li>компьютер со свежим браузером</li>
+      <li>USB шнур подключить пульт к компьютеру</li>
+    </ul>
+    <p>
+      Более ничего. Никаких специальных адаптеров, языков программирования или платного софта. Просто и бесплатно!
+    </p>
+
+    <h2>Шаг 1</h2>
+
+    <p>
+      На Android телефон установим:<ul>
+        <li>старую версию приложения DJI Fly App 1.1.2</li>
+        <li>приложение Fake GPS Location</li>
+      </ul>
+    </p>
+
+
+    <h4>Fake GPS Location</h4>
+    <p>
+      С этим приложением сымитируем, будто мы находимся в США или Боливии.
+      Делать это нужно дома, под крышей, чтобы дрон не поймал спутники GPS.
+    </p>
+    
+    <p>
+      Установим Android приложение <a href="https://play.google.com/store/apps/details?id=com.lexa.fakegps" target="_blank">
+        Fake GPS Location
+      </a> из Google Play.
+    </p>
+
+    <p>
+      Надо включить режим Разработчика в телефоне. В меню Настройки, О телефоне, найдите "Build number" или "версия MIUI" 
+      и коснитесь этот пункт 7 раз. Должно появиться сообщение «Теперь вы Разработчик».
+    </p>
+
+    <p>
+      Теперь надо зайти в меню Разработчика, в Расширенных настройках найти «Приложение местоположения»и выбрать там Fake GPS Locaion.
+    </p>
+    
+    <p>
+      Откроем приложение Fake GPS Location и на карты установим точку где-то в США или Боливии и нажмём кнопку с треугольником.
+      Теперь телефон станет полагать, что находится в том месте на карте. Это можно проверить в любом приложении, где показывается текущее положение, например, Яндекс Картах.
+    </p>
+
+    <h4>DJI Fly 1.1.2</h4>
+    <p>Удалите с телефона нынешнюю свежую версию DJI Fly.
+      Скачайте старую <a href="https://www.apkmirror.com/apk/dji-technology-co-ltd/dji-fly/dji-fly-1-1-2-release/dji-fly-1-1-2-2-android-apk-download/" target="_blank">
+        DJI Fly App 1.1.2
+      </a> на телефон и установите её. Она понадобится только один раз, сейчас, для хака. Потом вернёте свежую.
+    </p>
+
+    <h4>Включаем дрон</h4>
+    <p>
+      Подключите пульт к телефону, включите пульт и запустите DJI Fly App 1.1.2
+      <br>Включите дрон.
+      <br>Дождитесь, чтобы дрон соединился с пультом.
+    </p>
+
+<p>
+  В приложении должно появиться сообщение типа
+  <pre>
+    Идёт сброс настроек беспроводного подключения,
+    чтобы соответствовать местным правилам.
+    Попробуйте подключиться позднее.</pre>
+</p>
+
+<p>
+  Это значит, что всё идёт как надо.
+  Нажмите меню три точки справа сверху и зайдите во вкладку «Передача»
+  
+  <br>Там должно быть видно частоту 5.8 GHz и в графике должны появиться WiFi каналы <code>1..13</code> и <code>149..165</code>.
+  Теперь осталось зафиксировать этот режим, чтобы он не соскочил.
+  
+  <br>Выключите дрон, пульт и отключите пульт от телефона.
+</p>
+
+
+    <h2>Шаг 2</h2>
+    <p>Поменяем в пульте одну настройку, чтобы выбранный в Шаге-1 режим сохранился.</p>
+    <p>Понадобится:
+      <ol>
+        <li>Компьютер с любой ОС и браузером: Chrome, Opera или Edge.
+          <br><s>Safari</s>, <s>FireFox</s> не годятся;</li>
+        <li>ваш пульт от Mavic Mini;</li>
+        <li>USB кабель, чтобы подключить пульт к компу – он есть в комплекте дрона.</li>
+      </ol>
+    </p>
+    <h5>План действий</h5>
+    <ol>
+      <li>в браузере включить «экспериментальные возможности» (Experimental features)</li>
+      <li>подключить пульт к компу кабелем</li>
+      <li>включить пульт</li>
+      <li>нажать кнопку ниже</li>
+      <li>в появившемся меню выбрать пульт</li>
+    </ol>
+
+
+    <h4>Прокачаем браузер</h4>
+    <p>Чтобы работать с серийным портом, сейчас потребуется включить Экспериментальные возможности. Скопируйте ниже строку, соответствующую вашему браузеру и вставьте её в адресную строку:</p>
+    <pre>
+chrome://flags/#enable-experimental-web-platform-features
+
+opera://flags/#enable-experimental-web-platform-features
+
+edge://flags/#enable-experimental-web-platform-features
+    </pre>
+    <p>Там в странице настроек включите "Experimental Web Platform Features". Браузер попросит перезапустить его.</p>
+
+    <h4>Хакнем пульт</h4>
+    <ol>
+      <li>Подключите ваш пульт USB-кабелем к этому компьютеру.</li>
+      <li>Включите пульт.</li>
+      <li>Нажмите кнопку ниже. Появится окно выбора серийного порта – выберите там ваш пульт. У меня на Маке он называется "Gadget Serial v2_4".
+        <br>
+        <button class="btn btn-success" id="btn-boost">
+          Хакнуть пульт
+        </button>
+      </li>
+    </ol>
+
+    <div id="alert-patch" class="alert alert-success d-none" role="alert"></div>
+
+    <h4>Как откатить хак</h4>
+    <p>Чтобы вернуть ваш пульт в его «заводское» состояние:</p>
+    <ol>
+      <li>Подключите пульт к этому компу USB-кабелем</li>
+      <li>Включите пульт</li>
+      <li>Нажмите кнопку ниже и выберите в списке серийный порт вашего пульта ("Gadget Serial v2_4"):
+        <br>
+        <button class="btn btn-info" id="btn-stock">
+          Откатить хак
+        </button>
+      </li>
+    </ol>
+    <div id="alert-undo" class="alert alert-success d-none" role="alert"></div>
+
+    <h2>После хака</h2>
+    <ol>
+      <li>Отключите (и можно вообще удалить) приложение Fake GPS Location</li>
+      <li>Удалить старую версию DJI Fly App 1.1.2</li>
+      <li>Установите свежую версию DJI Fly App из Google Play или с сайта DJI</li>
+    </ol>
+
+    <h2>FAQ – часто задаваемые вопросы</h2>
+    <dl>
+
+      <dt>Для DJI Mini 2 этот хак подходит?</dt>
+      <dd>Нет. Хак только для DJI Mavic Mini.</dd>
+
+      <dt>Можно ли после этого обновлять DJI Fly App?</dt>
+      <dd>Можно. Старая версия <code>1.1.2</code> была нужна только раз, в Шаге 1. После примения хака надо удалить старую версию. Установить и пользоваться самой свежей версией DJI Fly App с Google Play или сайта DJI. Пользоваться дроном как всегда.</dd>
+
+      <dt>Как этот хак работает?</dt>
+      <dd>Всё делает фокус с Fake GPS: дрон начинает думать, что он в США или Боливии и включает радио на полную. В других странах, по сравнению с ними, мощность и допустимые радио частоты ограничены. Кнопка на странице отправляет в пульт последовательность байтов, которые запрещают пульту в дальнейшем изменять настройки радио. Это не влияет на определение дроном своего местоположения. Он не улетит в Боливию )
+      </dd>
+
+      <dt>Подробнее, технически, как работает этот хак?</dt>
+      <dd>Он изменяет единственную настройку: с <code>disable_country=0</code> на <code>disable_country=1</code> в файле конфигурации <code>wifi.conf</code> в пульте.
+        Специальная последовательность байтов отправленая в серийный порт через USB устанавливает эту настройку. Гуглите "DJI DUML" и "0x55 sequences".
+        <br>Байты, чтобы залочить страну: <pre>0x55 0x0e 0x04 0x66 0x2a 0x1b 0x07 0x27 0x40 0x06 0xfb 0x02 0xac 0x35</pre>
+        Байты, чтобы вернуть заводскую настройку: <pre>0x55 0x0e 0x04 0x66 0x2a 0x1b 0x25 0xf9 0x40 0x06 0xfb 0x03 0x9c 0x37</pre>
+      </dd>
+
+    </dl>
+
+    <h2>Благодарности</h2>
+    <p>Идея хака и «волшебные» байты: Андрей (Telegram @skyhackru, сайт Skyhack.ru) и русскоязычный Telegram чат @mavicminirus</p>
+    <p>Версия хака в браузере на JavaScript и видео: Сергей Соколов (Telegram @sergiks)</p>
+
+  </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+<script>
+  const showAlert = (id, text, is_error) => {
+    const el = document.getElementById(id);
+    el.innerText = text;
+    el.classList.remove('d-none');
+
+    if (is_error) {
+      el.classList.remove('alert-success');
+      el.classList.add('alert-danger');
+    } else {
+      el.classList.remove('alert-danger');
+      el.classList.add('alert-success');
+    }
+  }
+
+
+  // Byte sequence credits: skyhack.ru  t.me/skyhackru
+  const data = {
+    boost: new Uint8Array([85, 14, 4, 102, 42, 27,  7,  39, 64, 6, 251, 2, 172, 53]),
+    stock: new Uint8Array([85, 14, 4, 102, 42, 27, 37, 249, 64, 6, 251, 3, 156, 55]),
+  };
+
+  const patch = async (arrayBuffer, alertId, alertText) => {
+    if ('serial' in navigator) {
+      try {
+        const port = await navigator.serial.requestPort();
+
+        // const info = port.getInfo();
+        // if (info.usbProductId && info.usbVendorId) {
+        //   if (info.usbProductId == 8  &&  info.usbVendorId == 11427) {
+        //     // Mavic Mini remote, for sure
+        //   }
+        // }
+
+        await port.open({ baudRate: 9600, baudrate: 9600 }); // spelling varies
+
+        const writer = port.writable.getWriter();
+        writer.write(arrayBuffer);
+
+        showAlert(alertId, alertText);
+
+      } catch (err) {
+
+        console.error('There was an error opening the serial port:', err);
+        showAlert(alertId, 'Не получилось открыть серийный порт.', true);
+        
+      }
+      
+    } else {
+      
+      console.error('The Web serial API doesn\'t seem to be enabled in your browser.');
+      showAlert(alertId, 'В вашем браузере не поддерживается Web serial API.', true);
+
+    }
+  }
+
+  const addListener = (id, bytes, alertId, alertText) => document.getElementById(id).addEventListener('click', () => patch(bytes, alertId, alertText));
+  addListener('btn-boost', data.boost, 'alert-patch', 'Поздравляю! Ваш Mavic Mini пропатчен.');
+  addListener('btn-stock', data.stock, 'alert-undo', 'Поздравляю! Ваш Mavic Mini вернулся к заводской настройке.');
+
+</script>
+</body>
+</html>
