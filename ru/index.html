@@ -224,8 +224,8 @@ edge://flags/#enable-experimental-web-platform-features
     </dl>
 
     <h2>Благодарности</h2>
-    <p>Идея хака и «волшебные» байты: Андрей (Telegram @skyhackru, сайт Skyhack.ru) и русскоязычный Telegram чат @mavicminirus</p>
-    <p>Версия хака в браузере на JavaScript и видео: Сергей Соколов (Telegram @sergiks)</p>
+    <p>Идея хака и «волшебные» байты: русскоязычный Telegram чат @mavicminirus</p>
+    <p>JavaScript-версия хака в браузере, эти инструкции и видео: Сергей Соколов (Telegram @sergiks)</p>
 
   </div>
 
@@ -258,13 +258,6 @@ edge://flags/#enable-experimental-web-platform-features
     if ('serial' in navigator) {
       try {
         const port = await navigator.serial.requestPort();
-
-        // const info = port.getInfo();
-        // if (info.usbProductId && info.usbVendorId) {
-        //   if (info.usbProductId == 8  &&  info.usbVendorId == 11427) {
-        //     // Mavic Mini remote, for sure
-        //   }
-        // }
 
         await port.open({ baudRate: 9600, baudrate: 9600 }); // spelling varies
 
