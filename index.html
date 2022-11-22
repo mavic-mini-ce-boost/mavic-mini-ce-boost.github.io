@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DJI Mavic Mini CE max power boost</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   <base href="https://mavic-mini-ce-boost.github.io/">
   <meta property="og:title" content="DJI Mavic Mini CE boost">
   <meta property="og:type" content="website">
@@ -26,10 +26,28 @@
     <h2>Disclaimer</h2>
     <p class="lead">This is an experiment solely for educational purpose.</p>
     <p>Please do not attempt it as this can void your warranty and may possibly violate local regulations on radio usage.
-      <a href="https://www.dji.com/flysafe" target="_blank">Fly Safe</a>.</p>
+      <a href="https://www.dji.com/flysafe" target="_blank">Fly Safe</a>.
+    </p>
+
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">Do NOT use on v.600 firmware!</h4>
+      <p>
+        2 cases already reported: after applying the hack, the RC could not connect to the drone anymore.
+      </p>
+    </div>
+
+    <p>
+      There is not enough detail known about these two cases. Probably they are caused by the new firmware.
+    </p>
+
+    <p>
+      On my drone this hack was applied on <code>v01.00.0500</code> firmware both in RC and the aircraft.
+      <br>
+      Later I upgraded both to <code>v01.00.0600</code> and all is fine: hack works, drone flies.
+      However I never had to re-pair the drone and he remote controller.
+    </p>
 
     <h2>Overview</h2>
-    <!--<p>Mavic Mini comes in several hardware versions for different markets. FCC for USA, CE for Europe and there's a version for Japan. FCC, CE and Japanese version all differ in hardware of the aircraft (AC) and the remote controller (RC).</p>-->
     <p>
       This hack allows Mavic Mini CE drone and remote controller to bypass local regulation limitations, 
       enabling all WiFi channels and maximum transmission power.
